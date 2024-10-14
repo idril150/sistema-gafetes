@@ -45,7 +45,7 @@ def escanear_qr():
                     cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
 
         # Mostrar ambos recuadros
-        cv2.imshow('Escaneo QR', frame_resized)
+        cv2.imshow('Escaneo QR, presionar Q para salir', frame_resized)
         #cv2.imshow('Información del QR', texto_frame)
 
         # Salir si se presiona 'q'
