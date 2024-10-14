@@ -12,14 +12,14 @@ def escanear_qr():
     while True:
         # Capturar frame por frame
         ret, frame = cap.read()
-        if not ret:
-            print("No se pudo capturar el frame.")
-            break
-
+        
         # Decodificar los códigos QR en el frame solo si el escaneo está habilitado
         if escaneo_habilitado:
-            decoded_objects = decode(frame)
-
+            try:
+                decoded_objects = decode(frame)
+            except Exception as e:
+                print(f"Error al decodificar: {e}")
+                continue
             # Dibujar los códigos QR y almacenar el texto
             qr_text = ""
             for obj in decoded_objects:
@@ -35,12 +35,7 @@ def escanear_qr():
                     # Enviar datos a gafetes.py
                     imagen_fondo = "C:/Users/Soporte/Pictures/xd.jpg"  # Cambia la ruta de la imagen de fondo según sea necesario
                     salida_pdf = f"{nombre}{edad}.pdf"  # Nombre del archivo PDF de salida
-                    gafetes.crear_pdf_con_imagen(imagen_fondo, nombre, edad, id_numero, salida_pdf)
-                    
-                    
-
-                    
-
+                    gafetes.crear_pdf_con_imagen(imagen_fondo, nombre, edad, id_numero, salida_pdf)                    
         # Crear un recuadro para mostrar la cámara
         frame_resized = cv2.resize(frame, (640, 480))
         
@@ -51,7 +46,7 @@ def escanear_qr():
 
         # Mostrar ambos recuadros
         cv2.imshow('Escaneo QR', frame_resized)
-        cv2.imshow('Información del QR', texto_frame)
+        #cv2.imshow('Información del QR', texto_frame)
 
         # Salir si se presiona 'q'
         if cv2.waitKey(1) & 0xFF == ord('q'):
